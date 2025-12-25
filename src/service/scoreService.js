@@ -5,19 +5,29 @@ class ScoreService {
     try {
       if (!score) {
         const err = new err("Score is required");
-        err.status= 400;
+        err.status = 400;
         throw err;
       }
-        return await Score.create({
-          score,
-        });
-      
+      return await Score.create({
+        score,
+      });
     } catch (err) {
-      return err.message;
+      throw err;
     }
   }
 
-  
+    async getHighScore(){
+      try{
+
+          const data = await Score.findOne({
+              order:[["score","DESC"]]
+          })
+          return data;
+      }
+      catch(err){
+          throw err;
+      }
+    }
 }
 
 module.exports = new ScoreService();
