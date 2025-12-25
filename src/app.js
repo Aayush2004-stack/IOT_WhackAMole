@@ -4,6 +4,7 @@ const sequelize = require("./config/database");
 
 
 // routes
+const scoreRoutes= require("./routes/scoreRoute")
 
 
 
@@ -32,6 +33,7 @@ app.use(express.json());// to parse json bodies
 })()
 
 //routes
+app.use("/api/score",scoreRoutes);
 
 
 app.listen(PORT,()=>{
