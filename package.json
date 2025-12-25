@@ -1,5 +1,29 @@
 {
   "dependencies": {
-    "express": "^5.2.1"
-  }
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mariadb": "^3.4.5",
+    "sequelize": "^6.37.7",
+    "serialport": "^13.0.0"
+  },
+  "name": "iot_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aayush2004-stack/IOT_WhackAMole.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Aayush2004-stack/IOT_WhackAMole/issues"
+  },
+  "homepage": "https://github.com/Aayush2004-stack/IOT_WhackAMole#readme"
 }
