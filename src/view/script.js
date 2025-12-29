@@ -1,6 +1,6 @@
 async function fetchGameStatus() {
   try {
-    const res = await fetch("/api/game");
+    const res = await fetch("http://localhost:3000/api/game");
     const data = await res.json();
 
     document.getElementById("score").innerText = data.score;
@@ -31,5 +31,5 @@ async function fetchHighScore() {
 fetchHighScore();
 
 // Update live score & life 
-//setInterval(fetchGameStatus, 500);
+setInterval(fetchGameStatus, 500);
 
