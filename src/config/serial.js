@@ -1,70 +1,59 @@
+// serialConfig.js
 const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
-const scoreService = require("../service/scoreService");
 require("dotenv").config();
 
+// Serial state
+let currentScore = 0;
+let currentLives = 3;
+let lastUpdate = Date.now();
+let gameOverFlag = false;
 
-// 🔌 Adjust port name
+// Setup Serial Port
 const port = new SerialPort({
-    path: process.env.SERIAL_PORT, // macOS example
+    path: process.env.SERIAL_PORT, // e.g., /dev/tty.usbmodem14101 or COM3
     baudRate: 9600,
 });
 
+// Use ReadlineParser for line-by-line data
 const parser = port.pipe(new ReadlineParser({ delimiter: "\n" }));
 
-let currentScore = 0;
-let currentLives = 3;
+// Handle incoming serial data
+parser.on("data", (data) => {
+    data = data.trim();
+    data = data.replace(/[^ -~]+/g, ""); // remove non-printable chars
 
-// 📥 Read data from Arduino
-parser.on("data", async (data) => {
-    try {
-        data = data.trim();
-        console.log("From Arduino:", data);
+    console.log("From Arduino:", data);
 
-        /**
-         * Expected formats from Arduino:
-         * SCORE:10
-         * LIFE:2
-         * GAME_OVER
-         */
+    if (data.startsWith("SCORE:")) {
+        currentScore = parseInt(data.split(":")[1]);
+        lastUpdate = Date.now();
+    }
 
-        if (data.startsWith("SCORE:")) {
-            currentScore = parseInt(data.split(":")[1]);
-        }
+    if (data.startsWith("LIFE:")) {
+        currentLives = parseInt(data.split(":")[1]);
+        lastUpdate = Date.now();
+    }
 
-        if (data.startsWith("LIFE:")) {
-            currentLives = parseInt(data.split(":")[1]);
-        }
+    if (data === "GAME_OVER" && !gameOverFlag) {
+        console.log("GAME_OVER received. Final Score:", currentScore);
+        gameOverFlag = true;
 
-        if (data === "GAME_OVER") {
-            console.log("Final score:", currentScore);
-
-            // Save score ONLY once at end
-            await scoreService.saveFinalScore(currentScore);
-
-            // Reset for next game
+        // Reset after short delay
+        setTimeout(() => {
             currentScore = 0;
             currentLives = 3;
-        }
-
-    } catch (err) {
-        console.error("Serial Error:", err.message);
+            gameOverFlag = false;
+        }, 2000);
     }
 });
 
-// 🔊 Port status
-port.on("open", () => {
-    console.log("Serial connection opened");
-});
+port.on("open", () => console.log("Serial connection opened"));
+port.on("error", (err) => console.error("Serial port error:", err.message));
 
-port.on("error", (err) => {
-    console.error("Serial port error:", err.message);
-});
-
-// 📤 Export live data for web API
+// Export functions to get current score/lives
 module.exports = {
-    getLiveGameData: () => ({
-        score: currentScore,
-        lives: currentLives,
-    }),
+    getScore: () => currentScore,
+    getLives: () => currentLives,
+    getLastUpdate: () => lastUpdate,
 };
