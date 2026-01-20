@@ -1,35 +1,122 @@
+/* ---------------- RESET ---------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   background-color: #020617;
   color: white;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
+.screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ---------------- STATUS + HIGH SCORE ---------------- */
+.status-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  width: 90%;
+}
+
+.status {
+  width: 100%;
+  padding: 50px;
+  text-align: center;
+  font-weight: 900;
+  border-radius: 25px;
+  white-space: pre-line;
+  letter-spacing: 2px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* IDLE (before game starts) */
+.status.idle {
+  font-size: 56px;
+  background: #020617;
+  color: #38bdf8;
+  box-shadow: 0 0 50px #38bdf8;
+}
+
+/* GAME OVER */
+.status.gameover {
+  font-size: 60px;
+  background: #7f1d1d;
+  color: #fecaca;
+  box-shadow: 0 0 60px red;
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* ---------------- HIGH SCORE CARD ---------------- */
+.highscore {
+  width: 100%;
+  padding: 30px;
+  margin-top: 20px;
+  border-radius: 25px;
+  text-align: center;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 44px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Default High Score (when game is playing) */
+.highscore.playing {
+  background: linear-gradient(135deg, #14532d, #166534);
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+
+/* ---------------- HUD ---------------- */
 .container {
   text-align: center;
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
 }
 
 .card {
   background: #1e293b;
-  padding: 20px;
-  margin: 12px auto;
-  border-radius: 10px;
-  width: 260px;
+  padding: 30px;
+  margin: 18px auto;
+  border-radius: 14px;
+  width: 320px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
 }
 
 .card p {
   color: #94a3b8;
-  margin: 0;
+  font-size: 20px;
 }
 
 .card h2 {
-  font-size: 40px;
-  margin-top: 10px;
-}
-
-.highscore {
-  background: #14532d;
+  font-size: 46px;
+  margin-top: 12px;
 }

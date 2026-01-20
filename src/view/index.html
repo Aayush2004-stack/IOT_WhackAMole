@@ -1,31 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Whack-a-Mole Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Whack-a-Mole Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="screen">
+      <!-- STATUS + HIGH SCORE -->
+      <div id="statusContainer" class="status-container">
+        <div id="status" class="status idle">
+          🎯 HIT THE TARGET TO START THE GAME
+        </div>
 
-  <div class="container">
-    <h1>Whack-a-Mole</h1>
+        <div id="highScoreCard" class="card highscore">
+          <p>High Score</p>
+          <h2 id="highScore">0</h2>
+        </div>
+      </div>
 
-    <div class="card">
-      <p>Current Score</p>
-      <h2 id="score">0</h2>
+      <!-- HUD (Score + Lives) -->
+      <div id="hud" class="container hidden">
+        <h1>Whack-a-Mole</h1>
+
+        <div class="card">
+          <p>Current Score</p>
+          <h2 id="score">0</h2>
+        </div>
+
+        <div class="card">
+          <p>Remaining Lives</p>
+          <h2 id="lives">3</h2>
+        </div>
+      </div>
     </div>
 
-    <div class="card">
-      <p>Remaining Lives</p>
-      <h2 id="lives">3</h2>
-    </div>
-
-    <div class="card highscore">
-      <p>High Score</p>
-      <h2 id="highScore">0</h2>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>
